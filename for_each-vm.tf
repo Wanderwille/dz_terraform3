@@ -1,8 +1,6 @@
 resource "yandex_compute_instance" "for_each" {
-  for_each = {
-    main = var.each_vm[0]
-    replica = var.each_vm[1]
-  }
+  
+  for_each = { for name in var.vm_names : name => var.each_vm[index(var.vm_names, name)] }
   name        = "${each.key}"
   platform_id = "standard-v1"
   resources {
