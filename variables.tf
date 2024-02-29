@@ -87,7 +87,6 @@ variable "yandex_compute_instance_storage" {
       memory       = number
       core_fraction = number
       name         = string
-      count        = number
       platform_id = string
     })
   })
@@ -98,7 +97,6 @@ variable "yandex_compute_instance_storage" {
       memory       = 1
       core_fraction = 5
       name         = "storage"
-      count      = 1
       platform_id = "standard-v1"
     }
   }
