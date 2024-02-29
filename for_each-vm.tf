@@ -1,17 +1,17 @@
 resource "yandex_compute_instance" "for_each" {
   
-  for_each = { for name in var.vm_names : name => var.each_vm[index(var.vm_names, name)] }
+  for_each = zipmap(var.vm_names, var.each_vm)
   name        = "${each.key}"
-  platform_id = "standard-v1"
+  platform_id = var.vm_for_each_platform
   resources {
     cores         = "${each.value.cpu}"
     memory        = "${each.value.ram}"
-    core_fraction = 5
+    core_fraction = "${each.value.core_fraction}"
   }
   boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.ubuntu.image_id
-      type = "network-hdd"
+      type = var.vm_for_each_type
       size = "${each.value.disk}"
     }
   }

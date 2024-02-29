@@ -98,22 +98,31 @@ variable "yandex_compute_instance_storage" {
       memory       = 1
       core_fraction = 5
       name         = "storage"
-      count      = 3
+      count      = 1
       platform_id = "standard-v1"
     }
   }
 }
 
 variable "each_vm" {
-  type = list(object({  cpu=number, ram=number, disk=number }))
+  type = list(object({  cpu=number, ram=number, disk=number, core_fraction=number }))
   default = [
-    {  cpu=2, ram=2, disk=10 },
-    {  cpu=4, ram=4, disk=15 }
+    {  cpu=4, ram=2, disk=10, core_fraction = 5 },
+    {  cpu=2, ram=1, disk=15, core_fraction = 5 }
   ]
 }
-
 
 variable "vm_names" {
   type    = list(string)
   default = ["main", "replica"]
+}
+
+variable "vm_for_each_platform" {
+  type = string
+  default = "standard-v1"
+}
+
+variable "vm_for_each_type" {
+  type = string
+  default = "network-hdd"
 }
